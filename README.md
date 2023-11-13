@@ -1,27 +1,37 @@
-# ServicesApp
+# Exemplo de Services em Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
+## Funcionamento
 
-## Development server
+![](assets/ex8.gif)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Explicação da implementação
 
-## Code scaffolding
+### Criação do Serviço:
+O serviço UserService foi criado para gerenciar a lista de usuários. Ele fornece métodos para obter a lista de usuários (`getUsers()`) e adicionar um novo usuário ().
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```typescript
+// user.service.ts
+import { Injectable } from '@angular/core';
 
-## Build
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+  private users: string[] = [];
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  getUsers(): string[] {
+    return this.users;
+  }
 
-## Running unit tests
+  addUser(user: string): void {
+    this.users.push(user);
+  }
+}
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Integração do Serviço:
+O serviço foi injetado no componente UserListComponent para obter a lista de usuários durante a inicialização do componente. O método getUsers() do serviço é chamado no método `ngOnInit()`.
 
-## Running end-to-end tests
+O serviço também foi injetado no componente AddUserComponent para adicionar novos usuários à lista. O método `addUser()` do componente chama o método `addUser(user: string)` do serviço.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Com essa configuração, os componentes UserListComponent e AddUserComponent podem interagir com o serviço UserService para obter a lista de usuários e adicionar novos usuários, respectivamente. O serviço atua como uma camada intermediária que gerencia o estado e a lógica de negócios compartilhados entre esses componentes.
